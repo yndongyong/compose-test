@@ -27,10 +27,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        screenViewModel.screenData.observe(this){
+        screenViewModel.screenData.observe(this) {
             setContent {
                 MyTheme {
                     MyApp(screenViewModel)
@@ -77,24 +77,24 @@ class MainActivity : AppCompatActivity() {
 
 // Start building your app here!
 @Composable
-fun MyApp(vm :ScreenViewModel) {
+fun MyApp(vm: ScreenViewModel) {
     val curScreen = vm.screenData.observeAsState(true)
 
     val dogList = arrayListOf<Dog>()
-    dogList.add(Dog("bronx1",1,R.drawable.bronx_1))
-    dogList.add(Dog("edison1",1,R.drawable.edison_1))
-    dogList.add(Dog("gunner1",1,R.drawable.gunner_1))
-    dogList.add(Dog("lucas1",1,R.drawable.lucas_1))
+    dogList.add(Dog("bronx1", 1, R.drawable.bronx_1))
+    dogList.add(Dog("edison1", 1, R.drawable.edison_1))
+    dogList.add(Dog("gunner1", 1, R.drawable.gunner_1))
+    dogList.add(Dog("lucas1", 1, R.drawable.lucas_1))
 
-    dogList.add(Dog("bronx2",1,R.drawable.bronx_1))
-    dogList.add(Dog("edison2",1,R.drawable.edison_1))
-    dogList.add(Dog("gunner2",1,R.drawable.gunner_1))
-    dogList.add(Dog("lucas2",1,R.drawable.lucas_1))
+    dogList.add(Dog("bronx2", 1, R.drawable.bronx_1))
+    dogList.add(Dog("edison2", 1, R.drawable.edison_1))
+    dogList.add(Dog("gunner2", 1, R.drawable.gunner_1))
+    dogList.add(Dog("lucas2", 1, R.drawable.lucas_1))
 
-    dogList.add(Dog("bronx3",1,R.drawable.bronx_1))
-    dogList.add(Dog("edison3",1,R.drawable.edison_1))
-    dogList.add(Dog("gunner3",1,R.drawable.gunner_1))
-    dogList.add(Dog("lucas3",1,R.drawable.lucas_1))
+    dogList.add(Dog("bronx3", 1, R.drawable.bronx_1))
+    dogList.add(Dog("edison3", 1, R.drawable.edison_1))
+    dogList.add(Dog("gunner3", 1, R.drawable.gunner_1))
+    dogList.add(Dog("lucas3", 1, R.drawable.lucas_1))
 
 
     Crossfade(curScreen) {
@@ -106,19 +106,21 @@ fun MyApp(vm :ScreenViewModel) {
                 Column(
                     Modifier
                         .padding(16.dp)
-                        .verticalScroll(state))  {
-                    Text("Dog list",style = MaterialTheme.typography.h5)
+                        .verticalScroll(state)
+                ) {
+                    Text("Dog list", style = MaterialTheme.typography.h5)
 
                     dogList.forEach {
-                        DogItem(dog = it,onClick = {
+                        DogItem(dog = it, onClick = {
                             vm.showDog(it)
                             vm.navigateToDetail()
-                        },vm = vm)
+                        })
+
                     }
                 }
-            }else{
-                var curDog =  vm.curDog.value
-                DetailScreen(modifier = Modifier, curDog!!){
+            } else {
+                val curDog = vm.curDog.value
+                DetailScreen(curDog!!) {
                     vm.cleanDog()
                     vm.navigateToHome()
                 }
@@ -129,7 +131,7 @@ fun MyApp(vm :ScreenViewModel) {
 }
 
 
-class ScreenViewModel: ViewModel() {
+class ScreenViewModel : ViewModel() {
 
 
     private val _screen = MutableLiveData<Boolean>(true)
@@ -144,13 +146,13 @@ class ScreenViewModel: ViewModel() {
         _curDog.value = dog
     }
 
-    fun cleanDog(){
+    fun cleanDog() {
         _curDog.value = null
     }
 
     @MainThread
     fun onBack(): Boolean {
-        if (_screen.value !=true) {
+        if (_screen.value != true) {
             _screen.value = false
             return true
         }
@@ -169,7 +171,7 @@ class ScreenViewModel: ViewModel() {
 }
 
 @Composable
-fun DetailScreen(modifier: Modifier = Modifier, dog: Dog, onClick: (Dog) -> Unit) {
+fun DetailScreen(dog: Dog, onClick: (Dog) -> Unit) {
     val context = LocalContext.current
     Column(modifier = Modifier.padding(16.dp)) {
         AvatarHeaderImage(modifier = Modifier.clickable {
@@ -192,7 +194,7 @@ fun DetailScreen(modifier: Modifier = Modifier, dog: Dog, onClick: (Dog) -> Unit
 }
 
 @Composable
-fun DogItem(modifier: Modifier = Modifier,dog: Dog,onClick: (Dog) -> Unit,vm :ScreenViewModel){
+fun DogItem(dog: Dog, onClick: (Dog) -> Unit) {
     Row(
         modifier = Modifier
             .padding(16.dp)
@@ -206,16 +208,18 @@ fun DogItem(modifier: Modifier = Modifier,dog: Dog,onClick: (Dog) -> Unit,vm :Sc
             dog.avatarRes
         )
 
-        Column(modifier = Modifier
-            .weight(1f)) {
-            Text("name ${dog.name}",style = MaterialTheme.typography.h5)
+        Column(
+            modifier = Modifier
+                .weight(1f)
+        ) {
+            Text("name ${dog.name}", style = MaterialTheme.typography.h5)
             Text(text = "age ${dog.age}")
         }
     }
 }
 
 @Composable
-fun AvatarImage(modifier: Modifier = Modifier,avatarRes: Int) {
+fun AvatarImage(modifier: Modifier = Modifier, avatarRes: Int) {
     val image = ImageBitmap.imageResource(avatarRes)
     Image(
         bitmap = image,
@@ -228,7 +232,7 @@ fun AvatarImage(modifier: Modifier = Modifier,avatarRes: Int) {
 }
 
 @Composable
-fun AvatarHeaderImage(modifier: Modifier = Modifier,avatarRes: Int) {
+fun AvatarHeaderImage(modifier: Modifier = Modifier, avatarRes: Int) {
     val image = ImageBitmap.imageResource(avatarRes)
     Image(
         bitmap = image,
