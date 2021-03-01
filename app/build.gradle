@@ -61,6 +61,10 @@ android {
         excludes += "/META-INF/AL2.0"
         excludes += "/META-INF/LGPL2.1"
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -72,7 +76,7 @@ dependencies {
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:$compose_version'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$compose_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     testImplementation 'junit:junit:4.13.2'
 
