@@ -96,7 +96,6 @@ fun MyApp(vm: ScreenViewModel) {
     dogList.add(Dog("gunner3", 1, R.drawable.gunner_1))
     dogList.add(Dog("lucas3", 1, R.drawable.lucas_1))
 
-
     Crossfade(curScreen) {
         Surface(color = MaterialTheme.colors.background) {
 
@@ -111,11 +110,13 @@ fun MyApp(vm: ScreenViewModel) {
                     Text("Dog list", style = MaterialTheme.typography.h5)
 
                     dogList.forEach {
-                        DogItem(dog = it, onClick = {
-                            vm.showDog(it)
-                            vm.navigateToDetail()
-                        })
-
+                        DogItem(
+                            dog = it,
+                            onClick = {
+                                vm.showDog(it)
+                                vm.navigateToDetail()
+                            }
+                        )
                     }
                 }
             } else {
@@ -127,12 +128,9 @@ fun MyApp(vm: ScreenViewModel) {
             }
         }
     }
-
 }
 
-
 class ScreenViewModel : ViewModel() {
-
 
     private val _screen = MutableLiveData<Boolean>(true)
 
@@ -174,20 +172,27 @@ class ScreenViewModel : ViewModel() {
 fun DetailScreen(dog: Dog, onClick: (Dog) -> Unit) {
     val context = LocalContext.current
     Column(modifier = Modifier.padding(16.dp)) {
-        AvatarHeaderImage(modifier = Modifier.clickable {
-            onClick.invoke(dog)
-        }, dog.avatarRes)
+        AvatarHeaderImage(
+            modifier = Modifier.clickable {
+                onClick.invoke(dog)
+            },
+            dog.avatarRes
+        )
         Spacer(modifier = Modifier.size(16.dp))
-        Button(onClick = {
-            Toast.makeText(context, "Belong to you!", Toast.LENGTH_LONG).show()
-            onClick.invoke(dog)
-        }) {
+        Button(
+            onClick = {
+                Toast.makeText(context, "Belong to you!", Toast.LENGTH_LONG).show()
+                onClick.invoke(dog)
+            }
+        ) {
             Text(text = "I want to adoption!")
         }
         Spacer(modifier = Modifier.size(16.dp))
-        Button(onClick = {
-            onClick.invoke(dog)
-        }) {
+        Button(
+            onClick = {
+                onClick.invoke(dog)
+            }
+        ) {
             Text(text = "I want to see others")
         }
     }
@@ -246,7 +251,6 @@ fun AvatarHeaderImage(modifier: Modifier = Modifier, avatarRes: Int) {
 }
 
 data class Dog(val name: String, val age: Int, val avatarRes: Int)
-
 
 @Preview("Dark Theme", widthDp = 360, heightDp = 640)
 @Composable
