@@ -2,17 +2,17 @@
 AndroidDevChallenge
 <!--- Replace <OWNER> with your Github Username and <REPOSITORY> with the name of your repository. -->
 <!--- You can find both of these in the url bar when you open your repository in github. -->
-![Workflow result](https://github.com/yndongyong/<REPOSITORY>/workflows/Check/badge.svg)
+![Workflow result](https://github.com/yndongyong/compose-test/workflows/Check/badge.svg)
 
 
 ## :scroll: Description
 <!--- Describe your app in one or two sentences -->
-
+The app has two screens. One lists all the dogs using Column, and the other allows you to view the details of the dogs
 
 ## :bulb: Motivation and Context
 <!--- Optionally point readers to interesting parts of your submission. -->
 <!--- What are you especially proud of? -->
-
+This is a great technological revolution,Write the user interface using a declarative syntax
 
 ## :camera_flash: Screenshots
 <!-- You can add more screenshots here if you like -->
