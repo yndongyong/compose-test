@@ -15,7 +15,6 @@
  */
 package com.example.androiddevchallenge
 
-import android.media.Image
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -38,7 +37,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,7 +52,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.androiddevchallenge.ui.theme.MyTheme
-import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -97,7 +96,6 @@ fun MyApp(vm :ScreenViewModel) {
     dogList.add(Dog("gunner3",1,R.drawable.gunner_1))
     dogList.add(Dog("lucas3",1,R.drawable.lucas_1))
 
-    var position by remember { mutableStateOf(0) }
 
     Crossfade(curScreen) {
         Surface(color = MaterialTheme.colors.background) {
@@ -113,14 +111,15 @@ fun MyApp(vm :ScreenViewModel) {
 
                     dogList.forEach {
                         DogItem(dog = it,onClick = {
-                            position = dogList.indexOf(it)
+                            vm.showDog(it)
                             vm.navigateToDetail()
                         },vm = vm)
                     }
                 }
             }else{
-                var curDog = dogList.get(position)
-                DetailScreen(modifier = Modifier, curDog){
+                var curDog =  vm.curDog.value
+                DetailScreen(modifier = Modifier, curDog!!){
+                    vm.cleanDog()
                     vm.navigateToHome()
                 }
             }
@@ -131,10 +130,23 @@ fun MyApp(vm :ScreenViewModel) {
 
 
 class ScreenViewModel: ViewModel() {
-//    var screenData:LiveData<Boolean> = MutableLiveData(true)
-private val _screen = MutableLiveData<Boolean>(true)
+
+
+    private val _screen = MutableLiveData<Boolean>(true)
 
     var screenData: LiveData<Boolean> = _screen
+
+    private var _curDog = MutableLiveData<Dog>(null)
+
+    var curDog: LiveData<Dog> = _curDog
+
+    fun showDog(dog: Dog) {
+        _curDog.value = dog
+    }
+
+    fun cleanDog(){
+        _curDog.value = null
+    }
 
     @MainThread
     fun onBack(): Boolean {
