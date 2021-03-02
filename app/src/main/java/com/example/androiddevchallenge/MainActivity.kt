@@ -19,6 +19,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.DrawableRes
 import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.Crossfade
@@ -39,7 +40,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -79,21 +83,7 @@ class MainActivity : AppCompatActivity() {
 fun MyApp(vm: ScreenViewModel) {
     val curScreen = vm.screenData.observeAsState(true)
 
-    val dogList = arrayListOf<Dog>()
-    dogList.add(Dog("bronx1", 1, R.drawable.bronx_1))
-    dogList.add(Dog("edison1", 1, R.drawable.edison_1))
-    dogList.add(Dog("gunner1", 1, R.drawable.gunner_1))
-    dogList.add(Dog("lucas1", 1, R.drawable.lucas_1))
-
-    dogList.add(Dog("bronx2", 1, R.drawable.bronx_1))
-    dogList.add(Dog("edison2", 1, R.drawable.edison_1))
-    dogList.add(Dog("gunner2", 1, R.drawable.gunner_1))
-    dogList.add(Dog("lucas2", 1, R.drawable.lucas_1))
-
-    dogList.add(Dog("bronx3", 1, R.drawable.bronx_1))
-    dogList.add(Dog("edison3", 1, R.drawable.edison_1))
-    dogList.add(Dog("gunner3", 1, R.drawable.gunner_1))
-    dogList.add(Dog("lucas3", 1, R.drawable.lucas_1))
+    val dogList = vm.dogs
 
     Crossfade(curScreen) {
         Surface(color = MaterialTheme.colors.background) {
@@ -130,6 +120,25 @@ fun MyApp(vm: ScreenViewModel) {
 }
 
 class ScreenViewModel : ViewModel() {
+
+    val dogs by mutableStateOf(
+        listOf(
+            Dog("bronx1", 1, R.drawable.bronx_1),
+            Dog("edison1", 1, R.drawable.edison_1),
+            Dog("gunner1", 1, R.drawable.gunner_1),
+            Dog("lucas1", 1, R.drawable.lucas_1),
+
+            Dog("bronx2", 1, R.drawable.bronx_1),
+            Dog("edison2", 1, R.drawable.edison_1),
+            Dog("gunner2", 1, R.drawable.gunner_1),
+            Dog("lucas2", 1, R.drawable.lucas_1),
+
+            Dog("bronx3", 1, R.drawable.bronx_1),
+            Dog("edison3", 1, R.drawable.edison_1),
+            Dog("gunner3", 1, R.drawable.gunner_1),
+            Dog("lucas3", 1, R.drawable.lucas_1),
+        )
+    )
 
     private val _screen = MutableLiveData<Boolean>(true)
 
@@ -249,7 +258,7 @@ fun AvatarHeaderImage(modifier: Modifier = Modifier, avatarRes: Int = R.drawable
     )
 }
 
-data class Dog(val name: String, val age: Int, val avatarRes: Int)
+data class Dog(val name: String, val age: Int, @DrawableRes val avatarRes: Int)
 
 @Preview("Dark Theme", widthDp = 360, heightDp = 640)
 @Composable
