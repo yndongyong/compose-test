@@ -42,10 +42,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
@@ -225,9 +224,9 @@ fun DogItem(dog: Dog, onClick: (Dog) -> Unit) {
 
 @Composable
 fun AvatarImage(modifier: Modifier = Modifier, avatarRes: Int) {
-    val image = ImageBitmap.imageResource(avatarRes)
+//    val image = ImageBitmap.imageResource(avatarRes)
     Image(
-        bitmap = image,
+        painterResource(avatarRes),
         contentScale = ContentScale.Crop,
         contentDescription = null,
         modifier = modifier
@@ -238,9 +237,9 @@ fun AvatarImage(modifier: Modifier = Modifier, avatarRes: Int) {
 
 @Composable
 fun AvatarHeaderImage(modifier: Modifier = Modifier, avatarRes: Int) {
-    val image = ImageBitmap.imageResource(avatarRes)
+//    val image = ImageBitmap.imageResource(avatarRes)
     Image(
-        bitmap = image,
+        painterResource(avatarRes),
         contentScale = ContentScale.Crop,
         contentDescription = null,
         modifier = modifier
