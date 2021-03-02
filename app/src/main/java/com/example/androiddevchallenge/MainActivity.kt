@@ -223,7 +223,7 @@ fun DogItem(dog: Dog, onClick: (Dog) -> Unit) {
 }
 
 @Composable
-fun AvatarImage(modifier: Modifier = Modifier, avatarRes: Int) {
+fun AvatarImage(modifier: Modifier = Modifier, avatarRes: Int = R.drawable.bronx_1) {
 //    val image = ImageBitmap.imageResource(avatarRes)
     Image(
         painterResource(avatarRes),
@@ -236,7 +236,7 @@ fun AvatarImage(modifier: Modifier = Modifier, avatarRes: Int) {
 }
 
 @Composable
-fun AvatarHeaderImage(modifier: Modifier = Modifier, avatarRes: Int) {
+fun AvatarHeaderImage(modifier: Modifier = Modifier, avatarRes: Int = R.drawable.bronx_1) {
 //    val image = ImageBitmap.imageResource(avatarRes)
     Image(
         painterResource(avatarRes),
